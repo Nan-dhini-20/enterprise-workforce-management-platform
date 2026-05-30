@@ -2,6 +2,8 @@ package com.nandhini.ewmp.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -11,6 +13,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
+
 
 @Entity
 @Table(name = "employees")
@@ -28,6 +32,9 @@ public class Employee {
     @Column(unique = true)
     private String email;
 
+    @NotBlank(message = "Password is required")
+    private String password;
+
     @NotBlank(message = "Phone number is required")
     private String phoneNumber;
 
@@ -36,6 +43,9 @@ public class Employee {
 
     @NotNull(message = "Salary is required")
     private Double salary;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @ManyToOne
     @JoinColumn(name = "department_id")
@@ -98,5 +108,19 @@ public class Employee {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
