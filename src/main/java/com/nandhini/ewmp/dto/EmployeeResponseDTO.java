@@ -1,5 +1,7 @@
 package com.nandhini.ewmp.dto;
 
+import com.nandhini.ewmp.entity.Role;
+
 public class EmployeeResponseDTO {
 
     private Long employeeId;
@@ -8,6 +10,9 @@ public class EmployeeResponseDTO {
     private String phoneNumber;
     private String designation;
     private Double salary;
+    private Role role;
+
+    private Long departmentId;
     private String departmentName;
 
     public EmployeeResponseDTO() {
@@ -59,6 +64,22 @@ public class EmployeeResponseDTO {
 
     public void setSalary(Double salary) {
         this.salary = salary;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
     public String getDepartmentName() {

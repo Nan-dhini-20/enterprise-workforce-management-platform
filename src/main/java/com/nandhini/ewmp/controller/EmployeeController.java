@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nandhini.ewmp.entity.Employee;
+import com.nandhini.ewmp.dto.EmployeeRequestDTO;
+import com.nandhini.ewmp.dto.EmployeeResponseDTO;
 import com.nandhini.ewmp.service.EmployeeService;
 
 import jakarta.validation.Valid;
@@ -25,30 +26,37 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @PostMapping
-    public Employee createEmployee(@Valid @RequestBody Employee employee) {
-        return employeeService.saveEmployee(employee);
+    public EmployeeResponseDTO createEmployee(
+            @Valid @RequestBody EmployeeRequestDTO dto) {
+
+        return employeeService.saveEmployee(dto);
     }
 
     @GetMapping
-    public List<Employee> getAllEmployees() {
+    public List<EmployeeResponseDTO> getAllEmployees() {
+
         return employeeService.getAllEmployees();
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable Long id) {
+    public EmployeeResponseDTO getEmployeeById(
+            @PathVariable Long id) {
+
         return employeeService.getEmployeeById(id);
     }
 
     @PutMapping("/{id}")
-    public Employee updateEmployee(
+    public EmployeeResponseDTO updateEmployee(
             @PathVariable Long id,
-            @Valid @RequestBody Employee employee) {
+            @Valid @RequestBody EmployeeRequestDTO dto) {
 
-        return employeeService.updateEmployee(id, employee);
+        return employeeService.updateEmployee(
+                id, dto);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteEmployee(@PathVariable Long id) {
+    public String deleteEmployee(
+            @PathVariable Long id) {
 
         employeeService.deleteEmployee(id);
 
