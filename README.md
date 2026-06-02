@@ -1,11 +1,12 @@
 # Enterprise Workforce Management Platform (EWMP)
 
-A Spring Boot based Enterprise Workforce Management Platform designed to manage employees, departments, leave requests, authentication, and role-based access control within an organization.
+A full-stack Enterprise Workforce Management Platform designed to manage employees, departments, attendance, leave requests, authentication, and role-based access control within an organization.
 
 ---
 
 ## 🚀 Tech Stack
 
+### Backend
 - Java 17
 - Spring Boot 3.5
 - Spring Data JPA
@@ -15,76 +16,93 @@ A Spring Boot based Enterprise Workforce Management Platform designed to manage 
 - Maven
 - Swagger OpenAPI
 
+### Frontend
+- React.js
+- Vite
+- React Router DOM
+- Axios
+- JavaScript
+- HTML5
+- CSS3
+
 ---
 
 ## ⭐ Project Highlights
 
+- Full Stack Application (Spring Boot + React)
 - Layered Architecture (Controller → Service → Repository)
 - DTO & Mapper Pattern Implementation
 - JWT-Based Authentication & Authorization
 - Role-Based Access Control (RBAC)
 - BCrypt Password Encryption
 - Global Exception Handling
+- RESTful APIs
 - Swagger/OpenAPI Documentation
 - MySQL Database Integration
+- Protected Frontend Routes
+- Axios API Integration
 
 ---
 
 ## 📌 Features Implemented
 
-### Employee Management
-- Add Employee
-- View Employee
-- Update Employee
-- Delete Employee
-
-### Department Management
-- Add Department
-- View Department
-- Update Department
-- Delete Department
-
-### Leave Management
-- Apply Leave
-- View Leave Requests
-- Update Leave Status
-- Delete Leave Requests
-
-### Security & Authentication
-- BCrypt Password Encryption
-- User Login API
+### 🔹 Authentication & Security
+- User Login
 - JWT Token Generation
 - JWT Token Validation
 - JWT Authentication Filter
+- Protected APIs
+- Protected React Routes
 - Role-Based Access Control (ADMIN / EMPLOYEE)
-- Protected REST APIs
+- BCrypt Password Encryption
 
-### Validation & Error Handling
-- Bean Validation
-- Global Exception Handling
-- Custom Resource Not Found Exception
+### 🔹 Employee Management
+- Add Employee
+- View Employees
+- Update Employee
+- Delete Employee
 
-### API Documentation
-- Swagger UI Integration
-- OpenAPI Documentation
+### 🔹 Department Management
+- Add Department
+- View Departments
+
+### 🔹 Leave Management
+- Apply Leave
+- View Leave Requests
+- Delete Leave Request
+
+### 🔹 Attendance Management
+- Mark Attendance
+- View Attendance Records
+- View Attendance By ID
 
 ---
 
 ## 📂 Project Structure
 
 ```text
-src/main/java/com/nandhini/ewmp
-
-├── controller
-├── service
-├── repository
-├── entity
-├── dto
-├── mapper
-├── exception
-├── security
-├── jwt
-└── config
+EWMP
+│
+├── src/main/java/com/nandhini/ewmp
+│   ├── controller
+│   ├── service
+│   ├── repository
+│   ├── entity
+│   ├── dto
+│   ├── mapper
+│   ├── exception
+│   ├── security
+│   └── jwt
+│
+├── src/main/resources
+│
+└── ewmp-frontend
+    ├── src
+    │   ├── pages
+    │   ├── services
+    │   ├── components
+    │   └── routes
+    └── public
 ```
 
 ---
@@ -93,11 +111,12 @@ src/main/java/com/nandhini/ewmp
 
 1. User logs in using email and password.
 2. Password is verified using BCrypt.
-3. JWT token is generated and returned.
-4. Client sends the JWT token in the Authorization header.
-5. JwtAuthenticationFilter validates the token.
-6. Spring Security authenticates the user.
-7. Access is granted based on user roles (ADMIN / EMPLOYEE).
+3. JWT token is generated.
+4. Token is stored in Local Storage.
+5. React sends JWT in Authorization Header.
+6. JwtAuthenticationFilter validates the token.
+7. Spring Security authenticates the user.
+8. Access is granted based on role permissions.
 
 ---
 
@@ -106,12 +125,42 @@ src/main/java/com/nandhini/ewmp
 - employees
 - departments
 - leave_requests
+- attendance
+
+---
+
+## 🌐 Frontend Pages
+
+### Authentication
+- Login Page
+
+### Employee Module
+- Employee List
+- Add Employee
+- Update Employee
+
+### Department Module
+- Department List
+- Add Department
+
+### Leave Module
+- Leave Requests List
+- Apply Leave
+
+### Attendance Module
+- Attendance List
+- Mark Attendance
+
+### Dashboard
+- Employee Management
+- Department Management
+- Leave Management
+- Attendance Management
+- Logout
 
 ---
 
 ## 📖 API Documentation
-
-After running the application:
 
 ### Swagger UI
 
@@ -127,7 +176,7 @@ http://localhost:8080/v3/api-docs
 
 ---
 
-## ⚙️ How to Run
+## ⚙️ Backend Setup
 
 ### Clone Repository
 
@@ -143,7 +192,7 @@ cd enterprise-workforce-management-platform
 
 ### Configure Database
 
-Update `application.properties`:
+Update:
 
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/ewmp_db
@@ -154,13 +203,7 @@ spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 ```
 
-### Run Application
-
-```bash
-./mvnw spring-boot:run
-```
-
-or
+### Run Backend
 
 ```bash
 mvn spring-boot:run
@@ -168,15 +211,43 @@ mvn spring-boot:run
 
 ---
 
-## 🔐 API Security
+## ⚙️ Frontend Setup
 
-### Login Endpoint
+Navigate to frontend:
+
+```bash
+cd ewmp-frontend
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run frontend:
+
+```bash
+npm run dev
+```
+
+Frontend URL:
+
+```text
+http://localhost:5173
+```
+
+---
+
+## 🔐 Login API
+
+### Endpoint
 
 ```http
 POST /auth/login
 ```
 
-Request Body:
+### Request
 
 ```json
 {
@@ -185,20 +256,12 @@ Request Body:
 }
 ```
 
-Response:
+### Response
 
 ```json
 {
-  "token": "your-jwt-token"
+  "token": "jwt-token"
 }
-```
-
-### Using JWT Token
-
-Add the token in Swagger Authorize button or Postman:
-
-```text
-Bearer your-jwt-token
 ```
 
 ---
@@ -206,44 +269,64 @@ Bearer your-jwt-token
 ## 👥 Roles
 
 ### ADMIN
+
 - Manage Employees
 - Manage Departments
+- View Leave Requests
+- View Attendance
 - Access Protected APIs
 
 ### EMPLOYEE
-- Access Employee-Level APIs
-- Restricted from Admin APIs
+
+- Access Employee Features
+- View Protected Resources
+- Restricted from Admin-only APIs
 
 ---
 
 ## 📈 Current Progress
 
-- ✅ Employee Management CRUD
-- ✅ Department Management CRUD
-- ✅ Leave Management CRUD
+### Backend
+- ✅ Employee CRUD
+- ✅ Department Management
+- ✅ Leave Management
+- ✅ Attendance Management
 - ✅ DTO Layer
 - ✅ Mapper Layer
 - ✅ Validation
 - ✅ Global Exception Handling
-- ✅ Swagger Documentation
-- ✅ BCrypt Password Hashing
 - ✅ JWT Authentication
-- ✅ JWT Authorization Filter
-- ✅ Role-Based Access Control (ADMIN / EMPLOYEE)
-- ✅ Protected REST APIs
+- ✅ JWT Authorization
+- ✅ Spring Security
+- ✅ Swagger Documentation
+
+### Frontend
+- ✅ React + Vite Setup
+- ✅ Login Page
+- ✅ Dashboard
+- ✅ Employee Management UI
+- ✅ Department Management UI
+- ✅ Leave Management UI
+- ✅ Attendance Management UI
+- ✅ JWT Route Protection
+- ✅ Axios Integration
 
 ---
 
 ## 🔮 Future Enhancements
 
-- Attendance Management
-- DTO Mapping using MapStruct
-- Unit Testing (JUnit & Mockito)
-- Refresh Token Support
+- Leave Approval / Rejection Workflow
+- Role-Based Dashboard
+- Search Employees
+- Attendance Reports
+- Analytics Dashboard
+- Pagination & Sorting
 - Docker Deployment
 - CI/CD Pipeline
+- Unit Testing (JUnit & Mockito)
+- Refresh Token Support
 - Audit Logging
-- Pagination & Sorting
+- Cloud Deployment (AWS)
 
 ---
 
@@ -253,4 +336,4 @@ Bearer your-jwt-token
 
 Enterprise Workforce Management Platform (EWMP)
 
-Built using Java, Spring Boot, Spring Security, JWT, MySQL, JPA, and Swagger OpenAPI.
+Built using Java, Spring Boot, Spring Security, JWT, React, Vite, MySQL, JPA, and Swagger OpenAPI.
