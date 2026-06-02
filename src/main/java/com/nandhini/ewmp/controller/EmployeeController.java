@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nandhini.ewmp.dto.EmployeeRequestDTO;
@@ -61,5 +62,13 @@ public class EmployeeController {
         employeeService.deleteEmployee(id);
 
         return "Employee Deleted Successfully";
+    }
+    @GetMapping("/search")
+    public List<EmployeeResponseDTO>
+    searchEmployees(
+            @RequestParam String name) {
+
+        return employeeService
+                .searchEmployees(name);
     }
 }

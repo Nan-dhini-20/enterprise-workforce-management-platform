@@ -1,71 +1,135 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import API from "../services/api";
 
 function Dashboard() {
 
-    const navigate = useNavigate();
+    const [stats, setStats] = useState({
+        employees: 0,
+        departments: 0,
+        leaves: 0,
+        attendance: 0
+    });
 
-    const logout = () => {
+    useEffect(() => {
 
-        localStorage.removeItem("token");
+        fetchStats();
 
-        navigate("/");
+    }, []);
+
+    const fetchStats = async () => {
+
+        try {
+
+            const response =
+                await API.get(
+                    "/dashboard/stats"
+                );
+
+            setStats(
+                response.data
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Failed to load dashboard statistics"
+            );
+        }
     };
 
     return (
         <div>
 
-            <h1>EWMP Dashboard</h1>
+            <h1>
+                Enterprise Workforce Management Platform
+            </h1>
 
-            <button
-                onClick={() => navigate("/employees")}
-            >
-                View Employees
-            </button>
+            <hr />
 
-            <br /><br />
-            <button
-                onClick={() =>
-                    navigate("/departments")
-                }
-            >
-                View Departments
-            </button>
+            <h2>Dashboard</h2>
 
-            <br /><br />
+            <table border="1">
 
-            <button
-                onClick={() =>
-                    navigate("/add-department")
-                }
-            >
-                Add Department
-            </button>
+                <tbody>
 
-            <br /><br />
+                    <tr>
+                        <td>
+                            Employees
+                        </td>
 
-            <button
-                onClick={() =>
-                    navigate("/attendance")
-                }
-            >
-                Attendance Management
-            </button>
+                        <td>
+                            {stats.employees}
+                        </td>
+                    </tr>
 
-            <br /><br />
+                    <tr>
+                        <td>
+                            Departments
+                        </td>
 
-            <button
-                onClick={() =>
-                    navigate("/leaves")
-                }
-            >
-                Leave Management
-            </button>
+                        <td>
+                            {stats.departments}
+                        </td>
+                    </tr>
 
-            <br /><br />
+                    <tr>
+                        <td>
+                            Leave Requests
+                        </td>
+
+                        <td>
+                            {stats.leaves}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Attendance Records
+                        </td>
+
+                        <td>
+                            {stats.attendance}
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+            <br />
+
+            <Link to="/employees">
+                <button>
+                    Employees
+                </button>
+            </Link>
+
+            <br />
+
+            <Link to="/departments">
+                <button>
+                    Departments
+                </button>
+            </Link>
+
+            <br />
+
+            <Link to="/leaves">
+                <button>
+                    Leaves
+                </button>
+            </Link>
+
+            <br />
             
-            <button onClick={logout}>
-                Logout
-            </button>
+            <Link to="/attendance">
+                <button>
+                    Attendance
+                </button>
+            </Link>
 
         </div>
     );

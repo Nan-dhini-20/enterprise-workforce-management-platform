@@ -63,6 +63,31 @@ function Employees() {
             );
         }
     };
+    const [searchName, setSearchName] =
+    useState("");
+
+    const searchEmployees = async () => {
+
+        try {
+
+            const response =
+                await API.get(
+                    `/employees/search?name=${searchName}`
+                );
+
+            setEmployees(
+                response.data
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Search failed"
+            );
+        }
+    };
 
     return (
         <div>
@@ -76,6 +101,32 @@ function Employees() {
             >
                 Add Employee
             </button>
+
+            <br /><br />
+            
+            <input
+                type="text"
+                placeholder="Search Employee"
+                value={searchName}
+                onChange={(e) =>
+                    setSearchName(
+                        e.target.value
+                    )
+                }
+            />
+
+            <button
+                onClick={searchEmployees}
+            >
+                Search
+            </button>
+
+            <button
+                onClick={fetchEmployees}
+            >
+                Reset
+            </button>
+
 
             <br /><br />
 

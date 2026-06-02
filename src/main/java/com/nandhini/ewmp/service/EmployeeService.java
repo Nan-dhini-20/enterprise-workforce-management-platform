@@ -131,4 +131,13 @@ public class EmployeeService {
 
         employeeRepository.delete(employee);
     }
+    public List<EmployeeResponseDTO> searchEmployees(
+        String name) {
+
+    return employeeRepository
+            .findByNameContainingIgnoreCase(name)
+            .stream()
+            .map(employeeMapper::toResponseDTO)
+            .toList();
+}
 }
