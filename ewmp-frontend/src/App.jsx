@@ -5,6 +5,13 @@ import Dashboard from "./pages/Dashboard";
 import Employees from "./pages/Employees";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AddEmployee from "./pages/AddEmployee";
+import Departments from "./pages/Departments";
+import AddDepartment from "./pages/AddDepartment";
+import UpdateEmployee from "./pages/UpdateEmployee";
+import Leaves from "./pages/Leaves";
+import AddLeave from "./pages/AddLeave";
+import Attendance from "./pages/Attendance";
+import AddAttendance from "./pages/AddAttendance";
 
 function App() {
 
@@ -34,6 +41,44 @@ function App() {
         <Route
             path="/add-employee"
             element={<AddEmployee />}
+        />
+        <Route
+            path="/departments"
+            element={
+                <ProtectedRoute>
+                    <Departments />
+                </ProtectedRoute>
+            }
+        />
+        <Route
+            path="/add-department"
+            element={
+                <ProtectedRoute>
+                    <AddDepartment />
+                </ProtectedRoute>
+            }
+        />
+        <Route
+            path="/update-employee/:id"
+            element={<UpdateEmployee />}
+        />
+        <Route
+            path="/leaves"
+            element={<Leaves />}
+        />
+
+        <Route
+            path="/add-leave"
+            element={<AddLeave />}
+        />
+        <Route
+            path="/attendance"
+            element={<Attendance />}
+        />
+
+        <Route
+            path="/add-attendance"
+            element={<AddAttendance />}
         />
 
       </Routes>

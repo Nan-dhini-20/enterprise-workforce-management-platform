@@ -15,7 +15,7 @@ public class EmployeeRequestDTO {
     @NotBlank(message = "Email is required")
     private String email;
 
-    @NotBlank(message = "Password is required")
+    
     private String password;
 
     @NotBlank(message = "Phone number is required")

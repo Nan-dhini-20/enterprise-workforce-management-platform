@@ -31,6 +31,39 @@ function Employees() {
         }
     };
 
+    const deleteEmployee = async (id) => {
+
+        const confirmDelete =
+            window.confirm(
+                "Are you sure you want to delete this employee?"
+            );
+
+        if (!confirmDelete) {
+            return;
+        }
+
+        try {
+
+            await API.delete(
+                `/employees/${id}`
+            );
+
+            alert(
+                "Employee Deleted Successfully"
+            );
+
+            fetchEmployees();
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Failed to Delete Employee"
+            );
+        }
+    };
+
     return (
         <div>
 
@@ -38,7 +71,8 @@ function Employees() {
 
             <button
                 onClick={() =>
-                    navigate("/add-employee")}
+                    navigate("/add-employee")
+                }
             >
                 Add Employee
             </button>
@@ -50,6 +84,7 @@ function Employees() {
                 <thead>
 
                     <tr>
+
                         <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
@@ -57,6 +92,8 @@ function Employees() {
                         <th>Salary</th>
                         <th>Role</th>
                         <th>Department</th>
+                        <th>Actions</th>
+
                     </tr>
 
                 </thead>
@@ -80,6 +117,32 @@ function Employees() {
                             <td>{employee.role}</td>
 
                             <td>{employee.departmentName}</td>
+
+                            <td>
+
+                                <button
+                                    onClick={() =>
+                                        navigate(
+                                            `/update-employee/${employee.employeeId}`
+                                        )
+                                    }
+                                >
+                                    Edit
+                                </button>
+
+                                {" "}
+
+                                <button
+                                    onClick={() =>
+                                        deleteEmployee(
+                                            employee.employeeId
+                                        )
+                                    }
+                                >
+                                    Delete
+                                </button>
+
+                            </td>
 
                         </tr>
 
