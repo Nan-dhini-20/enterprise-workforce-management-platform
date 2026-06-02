@@ -36,4 +36,19 @@ public class LeaveRequestService {
     public void deleteLeaveRequest(Long id) {
         leaveRequestRepository.deleteById(id);
     }
+    public LeaveRequest updateLeaveStatus(
+        Long id,
+        String status) {
+
+    LeaveRequest leave =
+            leaveRequestRepository
+                    .findById(id)
+                    .orElseThrow(() ->
+                            new RuntimeException(
+                                    "Leave Request Not Found"));
+
+    leave.setStatus(status);
+
+    return leaveRequestRepository.save(leave);
+}
 }

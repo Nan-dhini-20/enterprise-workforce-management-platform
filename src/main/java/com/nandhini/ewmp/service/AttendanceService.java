@@ -31,4 +31,35 @@ public class AttendanceService {
                     new ResourceNotFoundException(
                         "Attendance not found with id " + id));
     }
+    public Attendance updateAttendance(
+        Long id,
+        Attendance attendanceDetails) {
+
+        Attendance attendance =
+                attendanceRepository.findById(id)
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException(
+                                        "Attendance not found"));
+
+        attendance.setAttendanceDate(
+                attendanceDetails.getAttendanceDate());
+
+        attendance.setStatus(
+                attendanceDetails.getStatus());
+
+        Attendance updatedAttendance =
+                attendanceRepository.save(attendance);
+
+        return updatedAttendance;
+    }
+    public void deleteAttendance(Long id) {
+
+        Attendance attendance =
+                attendanceRepository.findById(id)
+                        .orElseThrow(() ->
+                                new ResourceNotFoundException(
+                                        "Attendance not found"));
+
+        attendanceRepository.delete(attendance);
+    }
 }

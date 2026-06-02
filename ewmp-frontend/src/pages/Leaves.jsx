@@ -15,6 +15,29 @@ function Leaves() {
 
     }, []);
 
+    const updateStatus = async (
+    leaveId,
+    status
+) => {
+
+    try {
+
+        await API.put(
+            `/leave-requests/${leaveId}/status?status=${status}`
+        );
+
+        fetchLeaves();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Failed to update leave status"
+        );
+    }
+};
+
     const fetchLeaves = async () => {
 
         try {
@@ -67,6 +90,7 @@ function Leaves() {
                         <th>End Date</th>
                         <th>Reason</th>
                         <th>Status</th>
+                        <th>Actions</th>
 
                     </tr>
 
@@ -115,6 +139,32 @@ function Leaves() {
                                 {
                                   leave.status
                                 }
+                            </td>
+
+                            <td>
+
+                                <button
+                                    onClick={() =>
+                                        updateStatus(
+                                            leave.leaveId,
+                                            "APPROVED"
+                                        )
+                                    }
+                                >
+                                    Approve
+                                </button>
+
+                                <button
+                                    onClick={() =>
+                                        updateStatus(
+                                            leave.leaveId,
+                                            "REJECTED"
+                                        )
+                                    }
+                                >
+                                    Reject
+                                </button>
+
                             </td>
 
                         </tr>
